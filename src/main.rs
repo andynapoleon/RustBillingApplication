@@ -47,6 +47,9 @@ fn get_bill_amount() -> Option<f64> {
         print!("Amount: ");
         io::stdout().flush().expect("Flush failed");
         let input = get_input().unwrap_or_else(|| "".to_owned());
+        if input == "" {
+            return None;
+        }
         let parsed_input: Result<f64, _> = input.parse();
         match parsed_input {
             Ok(value) => return Some(value),
