@@ -38,11 +38,41 @@ fn get_input() -> Option<String> {
     }
 }
 
+enum MainMenu {
+    AddBill,
+    ViewBill,
+}
+
+impl MainMenu {
+    fn from_str(input: &str) -> Option<MainMenu> {
+        match input {
+            "1" => Some(Self::AddBill),
+            "2" => Some(Self::ViewBill),
+            _ => None,
+        }
+    }
+
+    fn show() {
+        println!("");
+        println!("--Billing Application--");
+        let menu = ["Add Bill".to_owned(), "View Bill".to_owned()];
+        for (index, item) in menu.iter().enumerate() {
+            println!("{}. {}", index, item);
+        }
+        println!("");
+        print!("Enter selection: ");
+        io::stdout().flush().expect("Flushing failed");
+    }
+}
+
 fn main() {
-    print!("Please input a number: ");
-    io::stdout().flush().expect("Flushing failed");
-    match get_input() {
-        Some(input) => println!("{}", input),
-        None => println!("{}", "Nothing was typed"),
+    MainMenu::show();
+    let input = get_input().expect("Enter your selection again.");
+    loop {
+        match MainMenu::from_str(input.as_str()) {
+            Some(MainMenu::AddBill) => println!("You chose: {}", input),
+            Some(MainMenu::ViewBill) => println!("You chose: {}", input),
+            None => return,
+        }
     }
 }
